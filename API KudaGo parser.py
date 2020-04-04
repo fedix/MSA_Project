@@ -6,7 +6,7 @@ import requests
     [{'id':...,'name':...,'categories':[...]},...]"""
 
 url_base = "https://kudago.com/public-api/v1.4/places/?"
-url_fields = "&fields=id,title,categories,coords"
+url_fields = "&fields=id,title,categories,coords,subway"
 url_location = "&location=spb"
 url_pages = "&page_size=100"
 url_full = url_base + url_fields + url_location + url_pages
@@ -14,6 +14,7 @@ url_full = url_base + url_fields + url_location + url_pages
 data = []
 with open('data/Places_spb_list.json', 'w', encoding='utf-8') as ouf:
     while url_full is not None:
+        print(url_full)
         response = requests.get(url_full)
         page_data = response.json()
         data.extend(page_data['results'])
