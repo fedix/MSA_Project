@@ -10,7 +10,7 @@ city = 'spb'
 
 url_full = f'https://kudago.com/public-api/v1.4/places/?&fields={fields}&location={city}&page_size=100'
 data = []
-with open('data/Places_spb_list.json', 'w', encoding='utf-8') as ouf:
+with open('../data/Places_spb_list.json', 'w', encoding='utf-8') as ouf:
     while url_full is not None:
         print(url_full)
         response = requests.get(url_full)
