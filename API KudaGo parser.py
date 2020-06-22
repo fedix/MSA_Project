@@ -5,12 +5,10 @@ import requests
 """Input: site`s API url. Output: .json file with class 'list':
     [{'id':...,'name':...,'categories':[...]},...]"""
 
-url_base = "https://kudago.com/public-api/v1.4/places/?"
-url_fields = "&fields=id,title,categories,coords,subway"
-url_location = "&location=spb"
-url_pages = "&page_size=100"
-url_full = url_base + url_fields + url_location + url_pages
+fields = 'id,title,categories,coords,subway,favorites_count,comments_count'
+city = 'spb'
 
+url_full = f'https://kudago.com/public-api/v1.4/places/?&fields={fields}&location={city}&page_size=100'
 data = []
 with open('data/Places_spb_list.json', 'w', encoding='utf-8') as ouf:
     while url_full is not None:
