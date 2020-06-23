@@ -1,7 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import itertools
-from geopy.distance import geodesic
+from misc import api_key
 import requests
 import time
 import json
@@ -11,22 +9,22 @@ TR = (60.038240, 30.462587)
 BL = (59.811478, 30.122698)
 BR = (59.747713, 30.707720)
 
-
 cols = np.linspace(BL[1], BR[1], num=34)
 rows = np.linspace(BL[0], TL[0], num=33)
 a = np.meshgrid(cols, rows)
 
 b = list(zip(a[0].flatten(), a[1].flatten()))
 
-
 a = []
 c = 0
-list_of_places = ['bar',"art_gallery",'restaurant','cafe','bakery', 'meal_takeaway', 'museum', 'shopping_mall', 'tourist_attraction']
+base = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+list_of_places = ['bar', "art_gallery", 'restaurant', 'cafe', 'bakery', 'meal_takeaway', 'museum', 'shopping_mall',
+                  'tourist_attraction']
 list_of_center = b
 for i in list_of_places:
     a = []
     for center in list_of_center:
-        url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAQ2QDQZ_Ktx1Xk8yWN2rZ001BChTKJvk8&location={center[1]},{center[0]}&radius=710&type={i}'
+        url = f'{base}?key={api_key}&location={center[1]},{center[0]}&radius=710&type={i}'
 
         myfile = requests.get(url)
         res = myfile.json()['results']
@@ -41,7 +39,7 @@ for i in list_of_places:
         print(c)
         time.sleep(5)
         while next_page is not None:
-            url = f'https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyAQ2QDQZ_Ktx1Xk8yWN2rZ001BChTKJvk8&pagetoken={next_page}'
+            url = f'{base}?key={api_key}&pagetoken={next_page}'
             req = requests.get(url).json()
             try:
                 next_page = req['next_page_token']
